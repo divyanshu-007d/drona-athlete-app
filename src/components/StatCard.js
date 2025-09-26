@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Surface } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '../theme/colors';
 
 const { width } = Dimensions.get('window');
@@ -27,11 +27,11 @@ export const StatCard = ({
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={[styles.iconContainer, { backgroundColor: color + '20' }]}>
-              <Icon name={icon} size={22} color={color} />
+              <MaterialIcons name={icon} size={22} color={color} />
             </View>
             {change && (
               <View style={styles.changeContainer}>
-                <Icon 
+                <MaterialIcons 
                   name={change > 0 ? "trending-up" : "trending-down"} 
                   size={12} 
                   color={change > 0 ? Colors.success : Colors.error} 
@@ -56,27 +56,25 @@ export const StatCard = ({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.surface,
-    marginRight: 16,
-    minWidth: (width - 64) / 2.2,
-    borderRadius: 20,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   gradient: {
     flex: 1,
   },
   content: {
-    padding: 20,
+    padding: 16,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     paddingHorizontal: 6,
     paddingVertical: 2,
-    borderRadius: 10,
+    borderRadius: 8,
   },
   changeText: {
     fontSize: 10,
@@ -94,18 +92,18 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
   value: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '800',
     color: Colors.textPrimary,
-    marginBottom: 4,
+    marginBottom: 3,
   },
   title: {
-    fontSize: 13,
+    fontSize: 12,
     color: Colors.textSecondary,
     fontWeight: '600',
   },
   subtitle: {
-    fontSize: 11,
+    fontSize: 10,
     color: Colors.textTertiary,
     marginTop: 2,
     fontWeight: '500',

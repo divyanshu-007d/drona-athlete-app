@@ -1,17 +1,17 @@
 export const athleteProfile = {
-  name: "Rahul Sharma",
+  name: "Divyanshu Dubey",
   avatar: "https://via.placeholder.com/100",
   testsCompleted: 12,
   recentScore: 78.5,
   rank: 145,
   totalAthletes: 15420,
   achievements: [
-    { id: 1, name: "First Test", icon: "medal", earned: true },
+    { id: 1, name: "First Test", icon: "check", earned: true },
     { id: 2, name: "Week Streak", icon: "whatshot", earned: true },
     { id: 3, name: "Form Master", icon: "gps-fixed", earned: false }
   ],
   recentActivity: [
-    { test: "Push-ups", score: 22, date: "2024-09-16", time: "14:30" },
+    { test: "Push-ups", score: 7, date: "2024-09-16", time: "14:30" },
     { test: "Sit-ups", score: 35, date: "2024-09-15", time: "16:45" },
     { test: "Plank", score: 45, date: "2024-09-14", time: "10:20" }
   ]
@@ -20,14 +20,14 @@ export const athleteProfile = {
 export const testsData = [
   {
     id: 1,
-    name: "Push-ups",
+    name: "Squats",
     category: "Strength",
     difficulty: "Medium",
     estimatedTime: "2-3 min",
     icon: "fitness-center",
-    lastScore: 22,
-    benchmark: 85,
-    description: "Test upper body strength and endurance"
+    lastScore: 7,
+    benchmark: 20,
+    description: "Test body strength and endurance"
   },
   {
     id: 2,
@@ -109,7 +109,7 @@ export const communityData = {
     { rank: 1, name: "Priya Patel", location: "Mumbai", totalScore: 1250, avatar: "https://via.placeholder.com/50" },
     { rank: 2, name: "Arjun Singh", location: "Delhi", totalScore: 1180, avatar: "https://via.placeholder.com/50" },
     { rank: 3, name: "Sneha Reddy", location: "Hyderabad", totalScore: 1155, avatar: "https://via.placeholder.com/50" },
-    { rank: 145, name: "Rahul Sharma", location: "Pune", totalScore: 785, avatar: "https://via.placeholder.com/50", isCurrentUser: true }
+    { rank: 145, name: "Divyanshu Dubey", location: "Pune", totalScore: 785, avatar: "https://via.placeholder.com/50", isCurrentUser: true }
   ],
   activeCompetitions: [
     { name: "Maharashtra Push-up Challenge", participants: 1200, endDate: "2024-09-25", prize: "State Recognition" },
@@ -127,7 +127,7 @@ export const gamificationData = {
     reward: 100
   },
   badges: [
-    { id: 1, name: "First Test", icon: "medal", category: "Starter", earned: true, points: 10 },
+    { id: 1, name: "First Test", icon: "check", category: "Starter", earned: true, points: 10 },
     { id: 2, name: "Perfect Form", icon: "gps-fixed", category: "Technique", earned: true, points: 25 },
     { id: 3, name: "Week Warrior", icon: "whatshot", category: "Consistency", earned: false, progress: 5, requirement: 7 },
     { id: 4, name: "Strength Master", icon: "fitness-center", category: "Performance", earned: false, progress: 2, requirement: 10 }

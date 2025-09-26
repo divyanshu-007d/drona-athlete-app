@@ -17,7 +17,7 @@ import {
   Surface
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../theme/colors';
 import { communityData } from '../data/mockData';
@@ -29,40 +29,45 @@ export default function CommunityScreen({ navigation }) {
   const [timeFilter, setTimeFilter] = useState('thisWeek');
 
   const LeaderboardCard = ({ user, index }) => (
-    <Surface style={[styles.leaderboardCard, user.isCurrentUser && styles.currentUserCard]} elevation={2}>
+    <Surface style={[styles.leaderboardCard, user.isCurrentUser && styles.currentUserCard]} elevation={user.isCurrentUser ? 3 : 1}>
       <LinearGradient
-        colors={user.isCurrentUser 
-          ? [Colors.primary + '15', Colors.primary + '05'] 
-          : ['transparent', 'transparent']
-        }
+        colors={user.isCurrentUser ? [Colors.primary + '08', Colors.primary + '04'] : ['#FFFFFF', '#FFFFFF']}
         style={styles.leaderboardGradient}
       >
         <View style={styles.leaderboardContent}>
-          <View style={styles.rankContainer}>
-            <Text style={[styles.rankNumber, user.isCurrentUser && { color: Colors.primary }]}>
-              #{user.rank}
-            </Text>
+          <View style={styles.rankSection}>
+            <View style={[styles.rankContainer, index < 3 && { backgroundColor: getMedalColor(index) + '20' }]}>
+              <Text style={[styles.rankNumber, user.isCurrentUser && { color: Colors.primary }]}>
+                {user.rank}
+              </Text>
+            </View>
             {index < 3 && (
-              <View style={[styles.medal, { backgroundColor: getMedalColor(index) }]}>
-                <Icon name="emoji-events" size={16} color="#FFFFFF" />
-              </View>
+              <MaterialIcons 
+                name={index === 0 ? 'emoji-events' : index === 1 ? 'military-tech' : 'workspace-premium'} 
+                size={16} 
+                color={getMedalColor(index)} 
+                style={styles.medalIcon}
+              />
             )}
           </View>
           
           <Avatar.Image
             size={48}
             source={{ uri: `https://via.placeholder.com/48?text=${user.name.charAt(0)}` }}
-            style={styles.userAvatar}
+            style={[styles.userAvatar, user.isCurrentUser && { borderWidth: 2, borderColor: Colors.primary }]}
           />
           
           <View style={styles.userInfo}>
             <Text style={[styles.userName, user.isCurrentUser && { color: Colors.primary }]}>
               {user.name}
             </Text>
-            <Text style={styles.userLocation}>{user.location}</Text>
+            <View style={styles.userMeta}>
+              <MaterialIcons name="location-on" size={12} color={Colors.textSecondary} />
+              <Text style={styles.userLocation}>{user.location}</Text>
+            </View>
           </View>
           
-          <View style={styles.scoreContainer}>
+          <View style={styles.scoreSection}>
             <Text style={[styles.userScore, user.isCurrentUser && { color: Colors.primary }]}>
               {user.totalScore.toLocaleString()}
             </Text>
@@ -83,45 +88,30 @@ export default function CommunityScreen({ navigation }) {
   };
 
   const CompetitionCard = ({ item }) => (
-    <Surface style={styles.competitionCard} elevation={3}>
-      <LinearGradient
-        colors={[Colors.warning + '08', Colors.warning + '03']}
-        style={styles.competitionGradient}
-      >
+    <Surface style={styles.competitionCard} elevation={2}>
+      <View style={styles.competitionContent}>
         <View style={styles.competitionHeader}>
-          <View style={[styles.competitionIcon, { backgroundColor: Colors.warning + '20' }]}>
-            <Icon name="emoji-events" size={28} color={Colors.warning} />
+          <View style={styles.competitionIconContainer}>
+            <MaterialIcons name="emoji-events" size={20} color={Colors.warning} />
           </View>
           <View style={styles.competitionInfo}>
-            <Text style={styles.competitionName}>{item.name}</Text>
-            <View style={styles.competitionMeta}>
-              <View style={styles.metaItem}>
-                <Icon name="people" size={16} color={Colors.textSecondary} />
-                <Text style={styles.metaText}>{item.participants.toLocaleString()}</Text>
-              </View>
-              <View style={styles.metaItem}>
-                <Icon name="schedule" size={16} color={Colors.textSecondary} />
-                <Text style={styles.metaText}>Ends {new Date(item.endDate).toLocaleDateString()}</Text>
-              </View>
-            </View>
+            <Text style={styles.competitionTitle}>{item.name}</Text>
+            <Text style={styles.competitionMeta}>
+              {item.participants.toLocaleString()} participants • Ends {new Date(item.endDate).toLocaleDateString()}
+            </Text>
           </View>
         </View>
         
-        <View style={styles.prizeSection}>
-          <View style={styles.prizeContainer}>
-            <Icon name="card-giftcard" size={20} color={Colors.success} />
-            <Text style={styles.prizeText}>Prize: {item.prize}</Text>
+        <View style={styles.competitionFooter}>
+          <View style={styles.prizeInfo}>
+            <Text style={styles.prizeLabel}>Prize</Text>
+            <Text style={styles.prizeAmount}>{item.prize}</Text>
           </View>
           <TouchableOpacity style={styles.joinButton}>
-            <LinearGradient
-              colors={[Colors.primary, Colors.primary + 'DD']}
-              style={styles.joinGradient}
-            >
-              <Text style={styles.joinButtonText}>Join Competition</Text>
-            </LinearGradient>
+            <Text style={styles.joinButtonText}>Join</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
     </Surface>
   );
 
@@ -138,7 +128,7 @@ export default function CommunityScreen({ navigation }) {
             <Text style={styles.feedTimestamp}>{timestamp}</Text>
           </View>
           <View style={[styles.feedBadge, { backgroundColor: badge.color + '20' }]}>
-            <Icon name={badge.icon} size={16} color={badge.color} />
+            <MaterialIcons name={badge.icon} size={14} color={badge.color} />
           </View>
         </View>
         
@@ -146,17 +136,17 @@ export default function CommunityScreen({ navigation }) {
         
         <View style={styles.feedActions}>
           <TouchableOpacity style={styles.feedAction}>
-            <Icon name="thumb-up" size={20} color={likes > 0 ? Colors.primary : Colors.neutral50} />
+            <MaterialIcons name="thumb-up" size={18} color={likes > 0 ? Colors.primary : Colors.neutral50} />
             <Text style={[styles.feedActionText, likes > 0 && { color: Colors.primary }]}>
               {likes}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.feedAction}>
-            <Icon name="chat-bubble-outline" size={20} color={Colors.neutral50} />
+            <MaterialIcons name="chat-bubble-outline" size={18} color={Colors.neutral50} />
             <Text style={styles.feedActionText}>{comments}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.feedAction}>
-            <Icon name="share" size={20} color={Colors.neutral50} />
+            <MaterialIcons name="share" size={18} color={Colors.neutral50} />
           </TouchableOpacity>
         </View>
       </View>
@@ -164,10 +154,10 @@ export default function CommunityScreen({ navigation }) {
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]} edges={['left', 'right']}>
       {/* Modern Header */}
       <LinearGradient
-        colors={[Colors.accent, Colors.accent + 'DD']}
+        colors={[Colors.primary, Colors.primary + 'E6', Colors.primary + 'CC']}
         style={styles.headerGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -175,14 +165,14 @@ export default function CommunityScreen({ navigation }) {
         <View style={styles.headerContent}>
           <View style={styles.headerInfo}>
             <Text style={styles.headerTitle}>Community</Text>
-            <Text style={styles.headerSubtitle}>Connect & Compete</Text>
+            <Text style={styles.headerSubtitle}>Connect & Compete with Athletes</Text>
           </View>
           <View style={styles.headerActions}>
             <TouchableOpacity style={styles.headerButton}>
-              <Icon name="search" size={22} color="#FFFFFF" />
+              <MaterialIcons name="search" size={22} color="#FFFFFF" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.headerButton}>
-              <Icon name="notifications-none" size={22} color="#FFFFFF" />
+              <MaterialIcons name="notifications-none" size={22} color="#FFFFFF" />
               <View style={styles.notificationDot} />
             </TouchableOpacity>
           </View>
@@ -265,7 +255,7 @@ export default function CommunityScreen({ navigation }) {
             ))}
             <TouchableOpacity style={styles.viewMoreButton}>
               <Text style={styles.viewMoreText}>View Full Leaderboard</Text>
-              <Icon name="arrow-forward" size={16} color={Colors.primary} />
+              <MaterialIcons name="arrow-forward" size={16} color={Colors.primary} />
             </TouchableOpacity>
           </View>
         </View>
@@ -331,9 +321,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerGradient: {
-    paddingTop: 12,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 40,
+    paddingHorizontal: 24,
   },
   headerContent: {
     flexDirection: 'row',
@@ -350,22 +340,24 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   headerSubtitle: {
-    fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.8)',
-    fontWeight: '500',
+    fontSize: 12,
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: '600',
   },
   headerActions: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 16,
   },
   headerButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   notificationDot: {
     position: 'absolute',
@@ -378,12 +370,13 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginTop: -12,
+    marginTop:0,
+    paddingTop:20,
   },
   statsCard: {
     marginHorizontal: 20,
-    marginBottom: 24,
-    borderRadius: 20,
+    marginBottom: 20,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   statsGradient: {
@@ -391,7 +384,7 @@ const styles = StyleSheet.create({
   },
   statsContent: {
     flexDirection: 'row',
-    paddingVertical: 24,
+    paddingVertical: 18,
     paddingHorizontal: 20,
   },
   statItem: {
@@ -399,13 +392,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statValue: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '800',
     color: Colors.primary,
     marginBottom: 4,
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: 10,
     color: Colors.textSecondary,
     fontWeight: '600',
     textAlign: 'center',
@@ -418,7 +411,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   section: {
-    marginBottom: 32,
+    marginBottom: 40,
     paddingHorizontal: 20,
   },
   sectionHeader: {
@@ -428,10 +421,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     color: Colors.textPrimary,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   viewAllText: {
     fontSize: 14,
@@ -454,15 +447,25 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   leaderboardList: {
-    gap: 12,
+    gap: 0,
   },
   leaderboardCard: {
     borderRadius: 16,
     overflow: 'hidden',
+    backgroundColor: Colors.surface,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   currentUserCard: {
     borderWidth: 2,
-    borderColor: Colors.primary + '40',
+    borderColor: Colors.primary,
+    transform: [{ scale: 1.02 }],
   },
   leaderboardGradient: {
     flex: 1,
@@ -470,59 +473,66 @@ const styles = StyleSheet.create({
   leaderboardContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    padding: 15,
+  },
+  rankSection: {
+    width: 50,
+    alignItems: 'center',
+    marginRight: 4,
   },
   rankContainer: {
-    width: 60,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
+    backgroundColor: Colors.neutral10,
   },
   rankNumber: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '800',
     color: Colors.textPrimary,
   },
-  medal: {
-    position: 'absolute',
-    top: -8,
-    right: 0,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+  medalIcon: {
+    marginTop: 4,
   },
   userAvatar: {
-    marginRight: 16,
-    borderWidth: 2,
-    borderColor: Colors.outline,
+    marginHorizontal: 10,
   },
   userInfo: {
     flex: 1,
   },
   userName: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: '700',
+    color: Colors.textPrimary,
+    marginBottom: 4,
+  },
+  userMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  userLocation: {
+    fontSize: 11,
+    color: Colors.textSecondary,
+    fontWeight: '500',
+    marginLeft: 4,
+  },
+  scoreSection: {
+    alignItems: 'flex-end',
+    minWidth: 80,
+  },
+  userScore: {
+    fontSize: 15,
+    fontWeight: '800',
     color: Colors.textPrimary,
     marginBottom: 2,
   },
-  userLocation: {
-    fontSize: 13,
-    color: Colors.textSecondary,
-    fontWeight: '500',
-  },
-  scoreContainer: {
-    alignItems: 'flex-end',
-  },
-  userScore: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: Colors.textPrimary,
-  },
   scoreLabel: {
     fontSize: 11,
-    color: Colors.textTertiary,
-    fontWeight: '500',
+    color: Colors.textSecondary,
+    fontWeight: '600',
+    textTransform: 'uppercase',
   },
   viewMoreButton: {
     flexDirection: 'row',
@@ -538,96 +548,96 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   competitionsList: {
-    gap: 16,
+    gap: 0,
   },
   competitionCard: {
-    borderRadius: 20,
+    borderRadius: 12,
     overflow: 'hidden',
+    backgroundColor: Colors.surface,
+    marginBottom: 12,
   },
-  competitionGradient: {
-    padding: 20,
+  competitionContent: {
+    padding: 16,
   },
   competitionHeader: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 16,
   },
-  competitionIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+  competitionIconContainer: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: Colors.warning + '20',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   competitionInfo: {
     flex: 1,
   },
-  competitionName: {
-    fontSize: 18,
-    fontWeight: '700',
+  competitionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
     color: Colors.textPrimary,
-    marginBottom: 8,
+    marginBottom: 4,
   },
   competitionMeta: {
-    gap: 8,
-  },
-  metaItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  metaText: {
     fontSize: 13,
     color: Colors.textSecondary,
-    marginLeft: 6,
     fontWeight: '500',
   },
-  prizeSection: {
+  competitionFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  prizeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  prizeInfo: {
     flex: 1,
   },
-  prizeText: {
+  prizeLabel: {
+    fontSize: 11,
+    color: Colors.textSecondary,
+    fontWeight: '500',
+    textTransform: 'uppercase',
+    marginBottom: 2,
+  },
+  prizeAmount: {
     fontSize: 14,
     color: Colors.success,
     fontWeight: '600',
-    marginLeft: 8,
   },
   joinButton: {
-    borderRadius: 16,
-    overflow: 'hidden',
-  },
-  joinGradient: {
-    paddingVertical: 12,
+    backgroundColor: Colors.primary,
     paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 20,
   },
   joinButtonText: {
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '600',
     color: '#FFFFFF',
   },
   feedList: {
-    gap: 16,
+    gap: 0,
   },
   feedCard: {
-    borderRadius: 16,
+    borderRadius: 12,
     overflow: 'hidden',
+    backgroundColor: Colors.surface,
+    marginBottom: 12,
   },
   feedContent: {
-    padding: 20,
+    padding: 16,
   },
   feedHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   feedUserInfo: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: 10,
   },
   feedUserName: {
     fontSize: 16,
@@ -648,14 +658,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   feedText: {
-    fontSize: 15,
+    fontSize: 14,
     color: Colors.textPrimary,
-    lineHeight: 22,
-    marginBottom: 16,
+    lineHeight: 20,
+    marginBottom: 12,
   },
   feedActions: {
     flexDirection: 'row',
-    gap: 24,
+    gap: 20,
   },
   feedAction: {
     flexDirection: 'row',
@@ -668,6 +678,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   bottomSpacing: {
-    height: 24,
+    height: 0,
   },
 });

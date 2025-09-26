@@ -2,12 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Surface, Button } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '../theme/colors';
+import { colorWithOpacity, ensureValidColor } from '../utils/colorUtils';
 
 export const TestCard = ({ test, onPress, onStartTest, style }) => {
   const getDifficultyColor = (difficulty) => {
-    switch (difficulty?.toLowerCase()) {
+    if (!difficulty) return Colors.neutral50;
+    switch (difficulty.toLowerCase()) {
       case 'easy': return Colors.success;
       case 'medium': return Colors.warning;
       case 'hard': return Colors.error;
@@ -16,7 +18,8 @@ export const TestCard = ({ test, onPress, onStartTest, style }) => {
   };
 
   const getCategoryColor = (category) => {
-    switch (category?.toLowerCase()) {
+    if (!category) return Colors.primary;
+    switch (category.toLowerCase()) {
       case 'strength': return Colors.strength;
       case 'endurance': return Colors.endurance;
       case 'agility': return Colors.agility;
@@ -25,24 +28,24 @@ export const TestCard = ({ test, onPress, onStartTest, style }) => {
     }
   };
 
-  const categoryColor = getCategoryColor(test.category);
-  const difficultyColor = getDifficultyColor(test.difficulty);
+  const categoryColor = ensureValidColor(getCategoryColor(test?.category));
+  const difficultyColor = ensureValidColor(getDifficultyColor(test?.difficulty));
 
   return (
     <Surface style={[styles.card, style]} elevation={3}>
       <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
         <LinearGradient
-          colors={[categoryColor + '08', categoryColor + '03', 'transparent']}
+          colors={[colorWithOpacity(categoryColor, '08'), colorWithOpacity(categoryColor, '03'), 'transparent']}
           style={styles.gradient}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
           <View style={styles.content}>
             <View style={styles.header}>
-              <View style={[styles.iconContainer, { backgroundColor: categoryColor + '20' }]}>
-                <Icon 
+              <View style={[styles.iconContainer, { backgroundColor: colorWithOpacity(categoryColor, '20') }]}>
+                <MaterialIcons 
                   name={test.icon || 'fitness-center'} 
-                  size={26} 
+                  size={22} 
                   color={categoryColor} 
                 />
               </View>
@@ -50,7 +53,7 @@ export const TestCard = ({ test, onPress, onStartTest, style }) => {
                 <Text style={styles.testName}>{test.name}</Text>
                 <Text style={styles.category}>{test.category}</Text>
               </View>
-              <View style={[styles.difficultyBadge, { backgroundColor: difficultyColor + '20' }]}>
+              <View style={[styles.difficultyBadge, { backgroundColor: colorWithOpacity(difficultyColor, '20') }]}>
                 <Text style={[styles.difficultyText, { color: difficultyColor }]}>
                   {test.difficulty}
                 </Text>
@@ -63,7 +66,7 @@ export const TestCard = ({ test, onPress, onStartTest, style }) => {
             
             <View style={styles.details}>
               <View style={styles.detailItem}>
-                <Icon name="schedule" size={16} color={Colors.textSecondary} />
+                <MaterialIcons name="schedule" size={16} color={Colors.textSecondary} />
                 <Text style={styles.detailText}>{test.estimatedTime}</Text>
               </View>
               {test.lastScore && (
@@ -79,7 +82,7 @@ export const TestCard = ({ test, onPress, onStartTest, style }) => {
               onPress={onStartTest}
               activeOpacity={0.8}
             >
-              <Icon name="play-arrow" size={20} color="#FFFFFF" />
+              <MaterialIcons name="play-arrow" size={20} color="#FFFFFF" />
               <Text style={styles.startButtonText}>Start Test</Text>
             </TouchableOpacity>
           </View>
@@ -92,34 +95,34 @@ export const TestCard = ({ test, onPress, onStartTest, style }) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.surface,
-    marginBottom: 16,
-    borderRadius: 20,
+    marginBottom: 12,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   gradient: {
     flex: 1,
   },
   content: {
-    padding: 20,
+    padding: 16,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   iconContainer: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   headerInfo: {
     flex: 1,
   },
   testName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
     color: Colors.textPrimary,
     marginBottom: 2,
@@ -144,13 +147,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.textSecondary,
     lineHeight: 20,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   details: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   detailItem: {
     flexDirection: 'row',
@@ -184,9 +187,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 14,
   },
   startButtonText: {
     fontSize: 15,

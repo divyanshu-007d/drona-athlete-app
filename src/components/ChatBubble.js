@@ -4,6 +4,7 @@ import { Surface, Avatar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from '../theme/colors';
+import { colorWithOpacity } from '../utils/colorUtils';
 
 export const ChatBubble = ({ 
   message, 
@@ -17,7 +18,7 @@ export const ChatBubble = ({
       {!isUser && (
         <View style={styles.avatarContainer}>
           <LinearGradient
-            colors={[Colors.secondary, Colors.secondary + 'DD']}
+            colors={[Colors.secondary, colorWithOpacity(Colors.secondary, 'DD')]}
             style={styles.avatarGradient}
           >
             <Icon name="psychology" size={18} color="#FFFFFF" />
@@ -28,7 +29,7 @@ export const ChatBubble = ({
       <View style={[styles.bubbleContainer, isUser ? styles.userBubbleContainer : styles.coachBubbleContainer]}>
         {isUser ? (
           <LinearGradient
-            colors={[Colors.primary, Colors.primary + 'DD']}
+            colors={[Colors.primary, colorWithOpacity(Colors.primary, 'DD')]}
             style={[styles.bubble, styles.userBubble]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
@@ -58,7 +59,7 @@ export const ChatBubble = ({
       {isUser && (
         <View style={styles.avatarContainer}>
           <LinearGradient
-            colors={[Colors.primary, Colors.primary + 'DD']}
+            colors={[Colors.primary, colorWithOpacity(Colors.primary, 'DD')]}
             style={styles.avatarGradient}
           >
             <Icon name="person" size={18} color="#FFFFFF" />

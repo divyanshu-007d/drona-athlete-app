@@ -15,7 +15,7 @@ import {
   Surface
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatCard } from '../components';
 import { Colors } from '../theme/colors';
@@ -64,7 +64,7 @@ export default function ProfileScreen({ navigation }) {
   const achievements = [
     { name: 'First Test', progress: 100, color: Colors.success, icon: 'military-tech' },
     { name: 'Week Streak', progress: 100, color: Colors.warning, icon: 'whatshot' },
-    { name: 'Form Master', progress: 75, color: Colors.primary, icon: 'target' },
+    { name: 'Form Master', progress: 75, color: Colors.primary, icon: 'check' },
     { name: 'Endurance Pro', progress: 60, color: Colors.endurance, icon: 'directions-run' },
     { name: 'Strength King', progress: 40, color: Colors.strength, icon: 'fitness-center' },
   ];
@@ -87,7 +87,7 @@ export default function ProfileScreen({ navigation }) {
     >
       <View style={styles.settingLeft}>
         <View style={[styles.settingIcon, { backgroundColor: Colors.primary + '15' }]}>
-          <Icon name={item.icon} size={22} color={Colors.primary} />
+          <MaterialIcons name={item.icon} size={22} color={Colors.primary} />
         </View>
         <Text style={styles.settingTitle}>{item.title}</Text>
       </View>
@@ -101,7 +101,7 @@ export default function ProfileScreen({ navigation }) {
         ) : (
           <>
             {item.value && <Text style={styles.settingValue}>{item.value}</Text>}
-            <Icon name="chevron-right" size={20} color={Colors.neutral60} />
+            <MaterialIcons name="chevron-right" size={20} color={Colors.neutral60} />
           </>
         )}
       </View>
@@ -111,7 +111,7 @@ export default function ProfileScreen({ navigation }) {
   const AchievementItem = ({ item }) => (
     <View style={styles.achievementItem}>
       <View style={[styles.achievementIcon, { backgroundColor: item.color + '20' }]}>
-        <Icon name={item.icon} size={20} color={item.color} />
+        <MaterialIcons name={item.icon} size={20} color={item.color} />
       </View>
       <View style={styles.achievementInfo}>
         <Text style={styles.achievementName}>{item.name}</Text>
@@ -133,7 +133,7 @@ export default function ProfileScreen({ navigation }) {
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]} edges={['left', 'right']}>
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Modern Profile Header */}
         <LinearGradient
@@ -144,10 +144,10 @@ export default function ProfileScreen({ navigation }) {
         >
           <View style={styles.headerActions}>
             <TouchableOpacity style={styles.headerButton}>
-              <Icon name="edit" size={20} color="#FFFFFF" />
+              <MaterialIcons name="edit" size={20} color="#FFFFFF" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.headerButton}>
-              <Icon name="settings" size={20} color="#FFFFFF" />
+              <MaterialIcons name="settings" size={20} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
           
@@ -170,7 +170,7 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.editProfileText}>Edit Profile</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.shareButton}>
-                <Icon name="share" size={18} color={Colors.primary} />
+                <MaterialIcons name="share" size={18} color={Colors.primary} />
               </TouchableOpacity>
             </View>
           </View>
@@ -196,11 +196,11 @@ export default function ProfileScreen({ navigation }) {
               
               <View style={styles.performanceBadges}>
                 <View style={[styles.performanceBadge, { backgroundColor: Colors.success + '20' }]}>
-                  <Icon name="trending-up" size={16} color={Colors.success} />
+                  <MaterialIcons name="trending-up" size={16} color={Colors.success} />
                   <Text style={[styles.badgeText, { color: Colors.success }]}>+5.2 this week</Text>
                 </View>
                 <View style={[styles.performanceBadge, { backgroundColor: Colors.primary + '20' }]}>
-                  <Icon name="emoji-events" size={16} color={Colors.primary} />
+                  <MaterialIcons name="emoji-events" size={16} color={Colors.primary} />
                   <Text style={[styles.badgeText, { color: Colors.primary }]}>Top 25%</Text>
                 </View>
               </View>
@@ -254,7 +254,7 @@ export default function ProfileScreen({ navigation }) {
         {/* Sign Out */}
         <View style={styles.section}>
           <TouchableOpacity style={styles.signOutButton} onPress={() => {}}>
-            <Icon name="logout" size={20} color={Colors.error} />
+            <MaterialIcons name="logout" size={20} color={Colors.error} />
             <Text style={styles.signOutText}>Sign Out</Text>
           </TouchableOpacity>
         </View>
@@ -274,123 +274,123 @@ const styles = StyleSheet.create({
   },
   profileHeaderGradient: {
     paddingTop: 60,
-    paddingBottom: 40,
-    paddingHorizontal: 20,
+    paddingBottom: 60,
+    paddingHorizontal: 16,
     position: 'relative',
   },
   headerActions: {
     position: 'absolute',
     top: 60,
-    right: 20,
+    right: 16,
     flexDirection: 'row',
-    gap: 12,
+    gap: 8,
     zIndex: 1,
   },
   headerButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   profileContent: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 12,
   },
   avatarContainer: {
     position: 'relative',
-    marginBottom: 20,
+    marginBottom: 12,
   },
   profileAvatar: {
-    borderWidth: 4,
+    borderWidth: 3,
     borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   onlineIndicator: {
     position: 'absolute',
-    bottom: 8,
-    right: 8,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    bottom: 6,
+    right: 6,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
     backgroundColor: Colors.success,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: '#FFFFFF',
   },
   profileName: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '800',
     color: '#FFFFFF',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   profileLocation: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'rgba(255, 255, 255, 0.9)',
-    marginBottom: 4,
+    marginBottom: 3,
     fontWeight: '500',
   },
   profileJoined: {
-    fontSize: 14,
+    fontSize: 12,
     color: 'rgba(255, 255, 255, 0.8)',
-    marginBottom: 24,
+    marginBottom: 16,
     fontWeight: '400',
   },
   profileActions: {
     flexDirection: 'row',
-    gap: 16,
+    gap: 12,
     alignItems: 'center',
   },
   editProfileButton: {
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 24,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   editProfileText: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
   },
   shareButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   overviewCard: {
-    marginHorizontal: 20,
-    marginTop: -20,
-    marginBottom: 24,
-    borderRadius: 20,
+    marginHorizontal: 16,
+    marginTop: -12,
+    marginBottom: 16,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   overviewGradient: {
     flex: 1,
   },
   overviewContent: {
-    padding: 24,
+    padding: 16,
   },
   overviewHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 12,
   },
   overviewInfo: {
     flex: 1,
   },
   overviewTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     color: Colors.textPrimary,
-    marginBottom: 4,
+    marginBottom: 3,
   },
   overviewSubtitle: {
-    fontSize: 14,
+    fontSize: 13,
     color: Colors.textSecondary,
     fontWeight: '500',
   },
@@ -399,50 +399,50 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   scoreValue: {
-    fontSize: 36,
-    fontWeight: '800',
+    fontSize: 21,
+    fontWeight: '600',
     color: Colors.success,
   },
   scoreMax: {
-    fontSize: 18,
+    fontSize: 16,
     color: Colors.textSecondary,
     fontWeight: '600',
     marginLeft: 2,
   },
   performanceBadges: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 8,
   },
   performanceBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 12,
   },
   badgeText: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600',
-    marginLeft: 6,
+    marginLeft: 4,
   },
   section: {
-    marginBottom: 24,
-    paddingHorizontal: 20,
+    marginBottom: 16,
+    paddingHorizontal: 16,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     color: Colors.textPrimary,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   viewAllText: {
-    fontSize: 14,
+    fontSize: 13,
     color: Colors.primary,
     fontWeight: '600',
   },
@@ -450,76 +450,75 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    gap: 8,
   },
   statCardStyle: {
-    width: (width - 52) / 2,
-    marginBottom: 12,
+    width: (width - 48) / 2,
+    marginBottom: 0,
   },
   achievementsCard: {
     backgroundColor: Colors.surface,
-    borderRadius: 20,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   achievementsContent: {
-    padding: 20,
+    padding: 16,
   },
   achievementItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 14,
   },
   achievementIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   achievementInfo: {
     flex: 1,
   },
   achievementName: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     color: Colors.textPrimary,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   progressContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 10,
   },
   progressBar: {
     flex: 1,
-    height: 8,
+    height: 6,
     backgroundColor: Colors.neutral95,
-    borderRadius: 4,
+    borderRadius: 3,
     overflow: 'hidden',
   },
   progressFill: {
     height: '100%',
-    borderRadius: 4,
+    borderRadius: 3,
   },
   achievementProgress: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '700',
-    minWidth: 40,
+    minWidth: 35,
     textAlign: 'right',
   },
   settingsCard: {
     backgroundColor: Colors.surface,
-    borderRadius: 16,
+    borderRadius: 12,
     overflow: 'hidden',
   },
   settingItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.outline,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
   lastSettingItem: {
     borderBottomWidth: 0,
@@ -530,15 +529,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   settingIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   settingTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     color: Colors.textPrimary,
   },
@@ -547,9 +546,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   settingValue: {
-    fontSize: 14,
+    fontSize: 13,
     color: Colors.textSecondary,
-    marginRight: 8,
+    marginRight: 6,
     fontWeight: '500',
   },
   signOutButton: {
@@ -557,18 +556,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.errorContainer,
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 16,
-    marginHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    marginHorizontal: 16,
   },
   signOutText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '700',
     color: Colors.error,
-    marginLeft: 8,
+    marginLeft: 6,
   },
   bottomSpacing: {
-    height: 32,
+    height: 20,
   },
 });

@@ -75,7 +75,7 @@ export default function TestInstructionsScreen({ navigation, route }) {
           <Card.Content style={styles.overviewContent}>
             <View style={styles.testHeader}>
               <View style={styles.testIcon}>
-                <MaterialIcons name={test.icon} size={32} color={Colors.primary} />
+                <MaterialIcons name={test.icon} size={24} color={Colors.primary} />
               </View>
               <View style={styles.testInfo}>
                 <Text style={styles.testName}>{test.name}</Text>
@@ -202,44 +202,44 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   overviewCard: {
-    margin: 16,
+    margin: 12,
     backgroundColor: Colors.surface,
     elevation: 2,
   },
   overviewContent: {
-    padding: 20,
+    padding: 16,
   },
   testHeader: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   testIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: Colors.primaryContainer,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   testInfo: {
     flex: 1,
   },
   testName: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: '700',
     color: Colors.onSurface,
-    marginBottom: 4,
+    marginBottom: 3,
   },
   testDescription: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.neutral50,
-    lineHeight: 22,
+    lineHeight: 20,
   },
   testDetails: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingTop: 16,
+    paddingTop: 12,
     borderTopWidth: 1,
     borderTopColor: Colors.neutral95,
   },
@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   progressSection: {
-    paddingHorizontal: 16,
-    marginBottom: 16,
+    paddingHorizontal: 12,
+    marginBottom: 12,
   },
   progressTitle: {
     fontSize: 16,
@@ -268,101 +268,101 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   section: {
-    marginBottom: 24,
-    paddingHorizontal: 16,
+    marginBottom: 16,
+    paddingHorizontal: 12,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '600',
     color: Colors.onBackground,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   instructionCard: {
     backgroundColor: Colors.surface,
-    marginBottom: 16,
+    marginBottom: 12,
     elevation: 1,
   },
   instructionContent: {
-    padding: 16,
+    padding: 12,
   },
   instructionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   stepNumber: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 10,
   },
   stepNumberText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '700',
     color: Colors.onPrimary,
   },
   instructionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: Colors.onSurface,
   },
   instructionImage: {
     width: '100%',
-    height: 200,
+    height: 140,
     borderRadius: 8,
-    marginBottom: 12,
+    marginBottom: 10,
     backgroundColor: Colors.neutral95,
   },
   instructionDescription: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.onSurface,
-    lineHeight: 24,
+    lineHeight: 20,
   },
   equipmentCard: {
     backgroundColor: Colors.surface,
     elevation: 1,
   },
   equipmentContent: {
-    padding: 16,
+    padding: 12,
   },
   equipmentItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   equipmentText: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.onSurface,
-    marginLeft: 12,
+    marginLeft: 10,
   },
   safetyCard: {
     backgroundColor: Colors.surface,
     elevation: 1,
   },
   safetyContent: {
-    padding: 16,
+    padding: 12,
   },
   safetyItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   safetyText: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.onSurface,
-    marginLeft: 12,
+    marginLeft: 10,
     flex: 1,
   },
   actionButtons: {
     flexDirection: 'row',
-    padding: 16,
+    padding: 12,
     backgroundColor: Colors.surface,
     borderTopWidth: 1,
     borderTopColor: Colors.neutral95,
-    gap: 12,
+    gap: 10,
   },
   backButton: {
     flex: 1,
@@ -382,6 +382,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   bottomSpacing: {
-    height: 32,
+    height: 16,
   },
 });

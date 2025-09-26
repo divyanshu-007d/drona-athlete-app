@@ -19,7 +19,7 @@ import {
   ProgressBar
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChatBubble } from '../components';
 import { Colors } from '../theme/colors';
@@ -69,7 +69,7 @@ export default function AICoachScreen({ navigation }) {
         style={styles.quickActionGradient}
       >
         <View style={[styles.quickActionIcon, { backgroundColor: action.color + '20' }]}>
-          <Icon name={action.icon} size={24} color={action.color} />
+          <MaterialIcons name={action.icon} size={20} color={action.color} />
         </View>
         <Text style={styles.quickActionText}>{action.title}</Text>
       </LinearGradient>
@@ -79,9 +79,9 @@ export default function AICoachScreen({ navigation }) {
   const ExerciseItem = ({ item }) => (
     <View style={styles.exerciseItem}>
       <View style={[styles.exerciseCheckbox, item.completed && styles.exerciseCompleted]}>
-        <Icon 
+        <MaterialIcons 
           name={item.completed ? "check" : "radio-button-unchecked"} 
-          size={18} 
+          size={16} 
           color={item.completed ? Colors.onPrimary : Colors.neutral60} 
         />
       </View>
@@ -119,23 +119,16 @@ export default function AICoachScreen({ navigation }) {
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]}>
-      {/* Modern Header */}
+    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]} edges={['left', 'right']}>
+      {/* Modern Header with Gradient */}
       <LinearGradient
-        colors={[Colors.secondary, Colors.secondary + 'DD']}
+        colors={[Colors.primary, Colors.primary + 'E6']}
         style={styles.headerGradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
       >
         <View style={styles.headerContent}>
           <View style={styles.coachInfo}>
-            <View style={styles.coachAvatarContainer}>
-              <LinearGradient
-                colors={['#FFFFFF', '#F8F9FA']}
-                style={styles.avatarGradient}
-              >
-                <Icon name="psychology" size={28} color={Colors.secondary} />
-              </LinearGradient>
+            <View style={styles.coachAvatar}>
+              <MaterialIcons name="psychology" size={28} color="#FFFFFF" />
             </View>
             <View style={styles.coachDetails}>
               <Text style={styles.coachName}>AI Coach</Text>
@@ -145,197 +138,177 @@ export default function AICoachScreen({ navigation }) {
               </View>
             </View>
           </View>
-          <TouchableOpacity style={styles.menuButton}>
-            <Icon name="more-vert" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
         </View>
       </LinearGradient>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Welcome Section */}
-        <Surface style={styles.welcomeSection} elevation={4}>
-          <LinearGradient
-            colors={[Colors.primary + '10', Colors.primary + '05']}
-            style={styles.welcomeGradient}
-          >
-            <View style={styles.welcomeContent}>
-              <Text style={styles.welcomeTitle}>Ready to Level Up? 🚀</Text>
-              <Text style={styles.welcomeSubtitle}>
-                I'm your personal AI fitness coach, here to guide you to success
-              </Text>
-            </View>
-          </LinearGradient>
-        </Surface>
-
-        {/* Quick Actions */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Quick Actions</Text>
-          <View style={styles.quickActionsGrid}>
-            {[
-              { title: 'Training Tips', icon: 'fitness-center', color: Colors.primary },
-              { title: 'Nutrition', icon: 'restaurant', color: Colors.success },
-              { title: 'Recovery', icon: 'self-improvement', color: Colors.accent },
-              { title: 'Mental Training', icon: 'psychology', color: Colors.flexibility }
-            ].map((action, index) => (
-              <QuickActionCard key={index} action={action} />
-            ))}
-          </View>
-        </View>
-
-        {/* Training Plan */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Current Training Plan</Text>
-          <Surface style={styles.planCard} elevation={3}>
-            <LinearGradient
-              colors={[Colors.primary + '08', Colors.primary + '03']}
-              style={styles.planGradient}
-            >
-              <View style={styles.planHeader}>
-                <View style={styles.planInfo}>
-                  <Text style={styles.planName}>{aiCoachData.currentPlan.name}</Text>
-                  <Text style={styles.planWeek}>Week {aiCoachData.currentPlan.week} of 8</Text>
-                </View>
-                <View style={styles.planProgressContainer}>
-                  <Text style={styles.progressPercentage}>{aiCoachData.currentPlan.progress}%</Text>
-                  <View style={styles.circularProgress}>
-                    <View style={[styles.progressCircle, { 
-                      borderColor: Colors.primary,
-                      transform: [{ rotate: `${(aiCoachData.currentPlan.progress / 100) * 360}deg` }]
-                    }]} />
-                  </View>
-                </View>
-              </View>
-              
-              <View style={styles.exercisesList}>
-                {aiCoachData.currentPlan.exercises.map((exercise, index) => (
-                  <ExerciseItem key={index} item={exercise} />
-                ))}
-              </View>
-              
-              <TouchableOpacity style={styles.viewPlanButton}>
-                <LinearGradient
-                  colors={[Colors.primary, Colors.primary + 'DD']}
-                  style={styles.buttonGradient}
-                >
-                  <Icon name="fitness-center" size={20} color="#FFFFFF" />
-                  <Text style={styles.buttonText}>View Full Plan</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </LinearGradient>
-          </Surface>
-        </View>
-
-        {/* Nutrition Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Nutrition Guidance</Text>
-          
-          {/* Nutrition Score Card */}
-          <Surface style={styles.nutritionCard} elevation={3}>
-            <LinearGradient
-              colors={[Colors.success + '10', Colors.success + '05']}
-              style={styles.nutritionGradient}
-            >
-              <View style={styles.nutritionHeader}>
-                <View style={styles.nutritionInfo}>
-                  <Text style={styles.nutritionTitle}>Daily Nutrition Score</Text>
-                  <Text style={styles.nutritionSubtitle}>Keep up the great work!</Text>
-                </View>
-                <View style={styles.nutritionScoreContainer}>
-                  <Text style={styles.scoreValue}>{aiCoachData.nutritionScore}</Text>
-                  <Text style={styles.scoreLabel}>/ 100</Text>
-                </View>
-              </View>
-              <View style={styles.progressBarContainer}>
-                <ProgressBar 
-                  progress={aiCoachData.nutritionScore / 100} 
-                  color={Colors.success}
-                  style={styles.nutritionProgressBar}
-                />
-              </View>
-            </LinearGradient>
-          </Surface>
-          
-          {/* Meal Suggestions */}
-          <Text style={styles.subsectionTitle}>Recommended Meals</Text>
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            style={styles.mealsContainer}
-            contentContainerStyle={styles.mealsContent}
-          >
-            {aiCoachData.mealSuggestions.map((meal, index) => (
-              <MealCard key={index} item={meal} />
-            ))}
-          </ScrollView>
-        </View>
-
-        {/* Chat Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Chat with Coach</Text>
-          <Surface style={styles.chatCard} elevation={3}>
-            <View style={styles.chatContainer}>
-              <FlatList
-                data={chatHistory.slice(-4)} // Show only last 4 messages
-                renderItem={({ item }) => (
-                  <ChatBubble
-                    message={item.message}
-                    sender={item.sender}
-                    timestamp={item.timestamp}
-                    isUser={item.sender === 'user'}
-                  />
-                )}
-                keyExtractor={(item) => item.id.toString()}
-                style={styles.messagesList}
-                scrollEnabled={false}
-              />
-              <TouchableOpacity style={styles.viewFullChatButton}>
-                <Text style={styles.viewFullChatText}>View Full Conversation</Text>
-                <Icon name="arrow-forward" size={16} color={Colors.primary} />
-              </TouchableOpacity>
-            </View>
-          </Surface>
-        </View>
-
-        <View style={styles.bottomSpacing} />
-      </ScrollView>
-
-      {/* Modern Chat Input */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.chatInputContainer}
+        style={styles.keyboardAvoidingContainer}
       >
-        <Surface style={styles.inputSurface} elevation={4}>
-          <View style={styles.inputRow}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.messageInput}
-                placeholder="Ask me anything about fitness..."
-                placeholderTextColor={Colors.neutral60}
-                value={message}
-                onChangeText={setMessage}
-                multiline
-                maxLength={500}
-              />
-            </View>
-            <TouchableOpacity 
-              style={[styles.sendButton, !message.trim() && styles.sendButtonDisabled]}
-              onPress={sendMessage}
-              disabled={!message.trim()}
-              activeOpacity={0.8}
+        <ScrollView 
+          style={styles.content} 
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* Welcome Message */}
+          <Surface style={styles.welcomeSection} elevation={2}>
+            <LinearGradient
+              colors={[Colors.primary + '08', Colors.primary + '04']}
+              style={styles.welcomeGradient}
             >
-              <LinearGradient
-                colors={message.trim() ? [Colors.primary, Colors.primary + 'DD'] : [Colors.neutral90, Colors.neutral80]}
-                style={styles.sendButtonGradient}
-              >
-                <Icon 
-                  name="send" 
-                  size={20} 
-                  color={message.trim() ? "#FFFFFF" : Colors.neutral50} 
-                />
-              </LinearGradient>
-            </TouchableOpacity>
+              <Text style={styles.welcomeTitle}>Ready to Level Up? 🚀</Text>
+              <Text style={styles.welcomeSubtitle}>
+                I'm here to guide you to success
+              </Text>
+            </LinearGradient>
+          </Surface>
+
+          {/* Quick Actions */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Quick Actions</Text>
+            <View style={styles.quickActionsGrid}>
+              <TouchableOpacity style={styles.quickActionCard}>
+                <LinearGradient
+                  colors={[Colors.primary + '15', Colors.primary + '08']}
+                  style={styles.quickActionGradient}
+                >
+                  <MaterialIcons name="fitness-center" size={24} color={Colors.primary} />
+                  <Text style={styles.quickActionText}>Training Tips</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.quickActionCard}>
+                <LinearGradient
+                  colors={[Colors.success + '15', Colors.success + '08']}
+                  style={styles.quickActionGradient}
+                >
+                  <MaterialIcons name="restaurant" size={24} color={Colors.success} />
+                  <Text style={styles.quickActionText}>Nutrition</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
           </View>
-        </Surface>
+
+          {/* Current Training Plan */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Current Training Plan</Text>
+            <Surface style={styles.planCard} elevation={3}>
+              <LinearGradient
+                colors={[Colors.primary + '05', Colors.primary + '02']}
+                style={styles.planGradient}
+              >
+                <View style={styles.planHeader}>
+                  <View style={styles.planInfo}>
+                    <Text style={styles.planName}>{aiCoachData.currentPlan.name}</Text>
+                    <Text style={styles.planWeek}>Week {aiCoachData.currentPlan.week} of 8</Text>
+                  </View>
+                  <View style={styles.planProgressContainer}>
+                    <Text style={styles.progressPercentage}>{aiCoachData.currentPlan.progress}%</Text>
+                    <View style={styles.progressCircle}>
+                      <View style={[styles.progressArc, { 
+                        borderColor: Colors.primary,
+                        transform: [{ rotate: `${(aiCoachData.currentPlan.progress / 100) * 360}deg` }]
+                      }]} />
+                    </View>
+                  </View>
+                </View>
+                
+                <View style={styles.exercisesList}>
+                  {aiCoachData.currentPlan.exercises.slice(0, 3).map((exercise, index) => (
+                    <ExerciseItem key={index} item={exercise} />
+                  ))}
+                </View>
+                
+                <TouchableOpacity style={styles.viewPlanButton}>
+                  <LinearGradient
+                    colors={[Colors.primary, Colors.primary + 'DD']}
+                    style={styles.viewPlanGradient}
+                  >
+                    <MaterialIcons name="fitness-center" size={18} color="#FFFFFF" />
+                    <Text style={styles.viewPlanButtonText}>View Full Plan</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </LinearGradient>
+            </Surface>
+          </View>
+
+          {/* Chat Input Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Ask Your Coach</Text>
+            <LinearGradient
+              colors={['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 1)']}
+              style={styles.inputGradientWrapper}
+            >
+              <Surface style={styles.inputSurface} elevation={8}>
+                <View style={styles.inputRow}>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.messageInput}
+                      placeholder="Ask me anything about fitness..."
+                      placeholderTextColor={Colors.neutral60}
+                      value={message}
+                      onChangeText={setMessage}
+                      multiline
+                      maxLength={500}
+                    />
+                    {message.length > 400 && (
+                      <Text style={styles.characterCount}>{message.length}/500</Text>
+                    )}
+                  </View>
+                  
+                  <TouchableOpacity 
+                    style={[styles.sendButton, !message.trim() && styles.sendButtonDisabled]}
+                    onPress={sendMessage}
+                    disabled={!message.trim()}
+                    activeOpacity={0.7}
+                  >
+                    <LinearGradient
+                      colors={message.trim() 
+                        ? [Colors.primary, Colors.primary + 'E6', Colors.primary + 'CC'] 
+                        : [Colors.neutral90, Colors.neutral85]}
+                      style={styles.sendButtonGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                    >
+                      <MaterialIcons 
+                        name="send" 
+                        size={20} 
+                        color={message.trim() ? "#FFFFFF" : Colors.neutral50} 
+                      />
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              </Surface>
+            </LinearGradient>
+          </View>
+
+          {/* Recent Chat Messages */}
+          {/* {chatHistory.length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Recent Conversation</Text>
+              <Surface style={styles.chatCard} elevation={3}>
+                <View style={styles.chatContainer}>
+                  <FlatList
+                    data={chatHistory.slice(-3)} // Show only last 3 messages
+                    renderItem={({ item }) => (
+                      <ChatBubble
+                        message={item.message}
+                        sender={item.sender}
+                        timestamp={item.timestamp}
+                        isUser={item.sender === 'user'}
+                      />
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
+                    style={styles.messagesList}
+                    scrollEnabled={false}
+                  />
+                </View>
+              </Surface>
+            </View>
+          )} */}
+
+          <View style={styles.bottomSpacing} />
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -345,10 +318,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  keyboardAvoidingContainer: {
+    flex: 1,
+  },
   headerGradient: {
-    paddingTop: 12,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
+    paddingVertical: 20,
+    paddingTop: 60,
   },
   headerContent: {
     flexDirection: 'row',
@@ -359,17 +335,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  coachAvatarContainer: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    overflow: 'hidden',
-    marginRight: 16,
-  },
-  avatarGradient: {
-    flex: 1,
+  coachAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 16,
   },
   coachDetails: {
     flex: 1,
@@ -389,54 +362,44 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     backgroundColor: '#4AFF4A',
-    marginRight: 6,
+    marginRight: 8,
   },
   coachStatus: {
     fontSize: 14,
     color: 'rgba(255, 255, 255, 0.9)',
     fontWeight: '500',
   },
-  menuButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   content: {
     flex: 1,
-    marginTop: -12,
   },
   welcomeSection: {
-    marginHorizontal: 20,
+    marginHorizontal: 24,
+    marginTop: 20,
     marginBottom: 24,
-    borderRadius: 20,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   welcomeGradient: {
-    flex: 1,
-  },
-  welcomeContent: {
-    padding: 24,
+    paddingHorizontal: 24,
+    paddingVertical: 28,
     alignItems: 'center',
   },
   welcomeTitle: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '800',
     color: Colors.textPrimary,
     marginBottom: 8,
     textAlign: 'center',
   },
   welcomeSubtitle: {
-    fontSize: 15,
+    fontSize: 16,
     color: Colors.textSecondary,
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 24,
   },
   section: {
-    marginBottom: 32,
-    paddingHorizontal: 20,
+    marginBottom: 28,
+    paddingHorizontal: 24,
   },
   sectionTitle: {
     fontSize: 20,
@@ -444,21 +407,13 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
     marginBottom: 16,
   },
-  subsectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Colors.textPrimary,
-    marginTop: 20,
-    marginBottom: 12,
-  },
   quickActionsGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
   quickActionCard: {
-    width: (width - 52) / 2,
-    marginBottom: 12,
+    flex: 1,
+    marginHorizontal: 6,
     borderRadius: 16,
     overflow: 'hidden',
   },
@@ -466,22 +421,15 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
   },
-  quickActionIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
   quickActionText: {
     fontSize: 14,
     fontWeight: '600',
     color: Colors.textPrimary,
+    marginTop: 8,
     textAlign: 'center',
   },
   planCard: {
-    borderRadius: 20,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   planGradient: {
@@ -491,13 +439,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 20,
   },
   planInfo: {
     flex: 1,
   },
   planName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     color: Colors.textPrimary,
     marginBottom: 4,
@@ -516,7 +464,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     marginBottom: 8,
   },
-  circularProgress: {
+  progressCircle: {
     width: 40,
     height: 40,
     borderRadius: 20,
@@ -524,12 +472,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  progressCircle: {
+  progressArc: {
     width: 32,
     height: 32,
     borderRadius: 16,
     borderWidth: 3,
     borderColor: Colors.primary,
+    borderStyle: 'solid',
   },
   exercisesList: {
     marginBottom: 20,
@@ -540,9 +489,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   exerciseCheckbox: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     backgroundColor: Colors.neutral95,
     justifyContent: 'center',
     alignItems: 'center',
@@ -565,183 +514,91 @@ const styles = StyleSheet.create({
     color: Colors.textTertiary,
   },
   exerciseDetails: {
-    fontSize: 13,
+    fontSize: 14,
     color: Colors.textSecondary,
     fontWeight: '500',
   },
   viewPlanButton: {
-    borderRadius: 16,
+    borderRadius: 12,
     overflow: 'hidden',
   },
-  buttonGradient: {
+  viewPlanGradient: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
   },
-  buttonText: {
-    fontSize: 15,
+  viewPlanButtonText: {
+    fontSize: 16,
     fontWeight: '700',
     color: '#FFFFFF',
     marginLeft: 8,
   },
-  nutritionCard: {
-    borderRadius: 20,
-    overflow: 'hidden',
-    marginBottom: 12,
-  },
-  nutritionGradient: {
-    padding: 24,
-  },
-  nutritionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  nutritionInfo: {
-    flex: 1,
-  },
-  nutritionTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: Colors.textPrimary,
-    marginBottom: 4,
-  },
-  nutritionSubtitle: {
-    fontSize: 13,
-    color: Colors.textSecondary,
-    fontWeight: '500',
-  },
-  nutritionScoreContainer: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-  },
-  scoreValue: {
-    fontSize: 32,
-    fontWeight: '800',
-    color: Colors.success,
-  },
-  scoreLabel: {
-    fontSize: 16,
-    color: Colors.textSecondary,
-    fontWeight: '600',
-    marginLeft: 2,
-  },
-  progressBarContainer: {
-    marginTop: 8,
-  },
-  nutritionProgressBar: {
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: Colors.neutral95,
-  },
-  mealsContainer: {
-    marginTop: 8,
-  },
-  mealsContent: {
-    paddingRight: 20,
-  },
-  mealCard: {
-    width: 180,
-    marginRight: 16,
-    borderRadius: 16,
-    overflow: 'hidden',
-  },
-  mealGradient: {
-    padding: 20,
-  },
-  mealName: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: Colors.textPrimary,
-    marginBottom: 12,
-  },
-  mealStats: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  mealStat: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  mealStatValue: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: Colors.success,
-    marginBottom: 2,
-  },
-  mealStatLabel: {
-    fontSize: 11,
-    color: Colors.textSecondary,
-    fontWeight: '600',
-    textTransform: 'uppercase',
-  },
-  mealStatDivider: {
-    width: 1,
-    height: 24,
-    backgroundColor: Colors.outline,
-    marginHorizontal: 12,
-  },
   chatCard: {
-    borderRadius: 20,
-    overflow: 'hidden',
+    borderRadius: 16,
+    backgroundColor: Colors.surface,
   },
   chatContainer: {
-    padding: 16,
+    padding: 20,
   },
   messagesList: {
-    maxHeight: 240,
+    maxHeight: 200,
   },
-  viewFullChatButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 16,
-    marginTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: Colors.outline,
-  },
-  viewFullChatText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: Colors.primary,
-    marginRight: 6,
-  },
-  chatInputContainer: {
-    backgroundColor: 'transparent',
+  inputGradientWrapper: {
+    paddingVertical: 12,
+    borderRadius: 20,
   },
   inputSurface: {
-    marginHorizontal: 16,
-    marginBottom: 16,
-    borderRadius: 24,
-    overflow: 'hidden',
+    borderRadius: 20,
+    backgroundColor: Colors.surface,
+    shadowColor: Colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
   },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    padding: 16,
+    padding: 8,
+    paddingHorizontal: 12,
   },
   inputContainer: {
     flex: 1,
     backgroundColor: Colors.surfaceVariant,
-    borderRadius: 20,
+    borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 12,
     marginRight: 12,
+    minHeight: 48,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: Colors.outline + '30',
   },
   messageInput: {
-    fontSize: 16,
+    fontSize: 15,
     color: Colors.textPrimary,
-    maxHeight: 80,
+    maxHeight: 100,
     lineHeight: 22,
+    fontWeight: '500',
+  },
+  characterCount: {
+    fontSize: 11,
+    color: Colors.neutral60,
+    textAlign: 'right',
+    marginTop: 4,
+    fontWeight: '500',
   },
   sendButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     overflow: 'hidden',
+    shadowColor: Colors.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
   },
   sendButtonGradient: {
     flex: 1,
@@ -749,9 +606,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sendButtonDisabled: {
-    opacity: 0.6,
+    opacity: 0.5,
+    shadowOpacity: 0.1,
   },
   bottomSpacing: {
-    height: 24,
+    height: 40,
   },
 });

@@ -12,7 +12,7 @@ import { Surface, Searchbar, Chip } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { TestCard } from '../components';
 import { testsData, categories } from '../data/mockData';
 import { Colors } from '../theme/colors';
@@ -46,7 +46,7 @@ export default function TestsScreen({ navigation }) {
           end={{ x: 1, y: 1 }}
         >
           <View style={[styles.categoryIconContainer, { backgroundColor: category.color + '20' }]}>
-            <Icon name={category.icon} size={24} color={isSelected ? '#FFFFFF' : category.color} />
+            <MaterialIcons name={category.icon} size={24} color={isSelected ? '#FFFFFF' : category.color} />
           </View>
           <Text style={[styles.categoryName, { color: isSelected ? '#FFFFFF' : Colors.textPrimary }]}>
             {category.name}
@@ -112,12 +112,24 @@ export default function TestsScreen({ navigation }) {
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.screenTitle}>Fitness Tests</Text>
-        <Text style={styles.screenSubtitle}>Choose your challenge</Text>
-      </View>
+    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]} edges={['left', 'right']}>
+      {/* Modern Header with Gradient */}
+      <LinearGradient
+        colors={[Colors.primary, Colors.primary + 'E6', Colors.primary + 'CC']}
+        style={styles.headerGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <View style={styles.headerContent}>
+          <View style={styles.headerInfo}>
+            <Text style={styles.screenTitle}>Fitness Tests</Text>
+            <Text style={styles.screenSubtitle}>Choose your challenge</Text>
+          </View>
+          <View style={styles.headerIcon}>
+            <MaterialIcons name="fitness-center" size={32} color="#FFFFFF" />
+          </View>
+        </View>
+      </LinearGradient>
 
       {/* Stats Header */}
       <TestStatsHeader />
@@ -147,7 +159,7 @@ export default function TestsScreen({ navigation }) {
               style={styles.categoryGradient}
             >
               <View style={[styles.categoryIconContainer, { backgroundColor: Colors.primary + '20' }]}>
-                <Icon name="apps" size={24} color={selectedCategory === 'All' ? '#FFFFFF' : Colors.primary} />
+                <MaterialIcons name="apps" size={24} color={selectedCategory === 'All' ? '#FFFFFF' : Colors.primary} />
               </View>
               <Text style={[styles.categoryName, { color: selectedCategory === 'All' ? '#FFFFFF' : Colors.textPrimary }]}>
                 All
@@ -204,25 +216,41 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 16,
+  headerGradient: {
+    paddingHorizontal: 24,
+    paddingVertical: 20,
+    paddingTop: 60,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  headerInfo: {
+    flex: 1,
+  },
+  headerIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   screenTitle: {
     fontSize: 28,
     fontWeight: '800',
-    color: Colors.textPrimary,
+    color: '#FFFFFF',
     marginBottom: 4,
   },
   screenSubtitle: {
     fontSize: 16,
-    color: Colors.textSecondary,
+    color: 'rgba(255, 255, 255, 0.9)',
     fontWeight: '500',
   },
   statsHeader: {
     marginHorizontal: 20,
-    marginBottom: 20,
+    marginBottom: 16,
     borderRadius: 16,
     overflow: 'hidden',
   },
@@ -231,8 +259,8 @@ const styles = StyleSheet.create({
   },
   statsContent: {
     flexDirection: 'row',
-    paddingVertical: 20,
-    paddingHorizontal: 24,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
   },
   statItem: {
     flex: 1,
@@ -257,7 +285,7 @@ const styles = StyleSheet.create({
   },
   searchSection: {
     paddingHorizontal: 20,
-    marginBottom: 24,
+    marginBottom: 20,
   },
   searchBar: {
     backgroundColor: Colors.surface,
@@ -268,22 +296,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   categoriesSection: {
-    marginBottom: 24,
+    marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     color: Colors.textPrimary,
-    marginBottom: 16,
+    marginBottom: 12,
     paddingHorizontal: 20,
   },
   categoriesScroll: {
     paddingLeft: 20,
   },
   categoryCard: {
-    width: 120,
-    height: 100,
-    marginRight: 16,
+    width: 110,
+    height: 90,
+    marginRight: 12,
     borderRadius: 16,
     overflow: 'hidden',
   },
@@ -292,17 +320,17 @@ const styles = StyleSheet.create({
   },
   categoryGradient: {
     flex: 1,
-    padding: 16,
+    padding: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
   categoryIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   categoryName: {
     fontSize: 14,
@@ -314,7 +342,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   filtersSection: {
-    marginBottom: 24,
+    marginBottom: 20,
   },
   filtersContent: {
     paddingHorizontal: 20,
@@ -343,6 +371,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   testsList: {
-    paddingBottom: 20,
+    paddingBottom: 0, // Remove extra padding that creates gap
   },
 });

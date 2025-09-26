@@ -10,13 +10,13 @@ import {
 import { Card, Avatar, IconButton, Surface } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { athleteProfile } from '../data/mockData';
 import { Colors } from '../theme/colors';
 
 const { width } = Dimensions.get('window');
-const cardWidth = (width - 48) / 2;
+const cardWidth = (width - 52) / 2; // Better spacing calculation
 
 const HomeScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -29,14 +29,14 @@ const HomeScreen = ({ navigation }) => {
       >
         <View style={styles.statCardContent}>
           <View style={[styles.statIconContainer, { backgroundColor: color + '20' }]}>
-            <Icon name={icon} size={22} color={color} />
+            <MaterialIcons name={icon} size={22} color={color} />
           </View>
           <View style={styles.statInfo}>
             <Text style={styles.statValue}>{value}</Text>
             <Text style={styles.statTitle}>{title}</Text>
             {change && (
               <View style={styles.changeContainer}>
-                <Icon 
+                <MaterialIcons 
                   name={change > 0 ? "trending-up" : "trending-down"} 
                   size={14} 
                   color={change > 0 ? Colors.success : Colors.error} 
@@ -63,7 +63,7 @@ const HomeScreen = ({ navigation }) => {
           borderColor: achievement.earned ? Colors.primary : Colors.neutral80,
         }
       ]}>
-        <Icon 
+        <MaterialIcons 
           name={achievement.icon} 
           size={18} 
           color={achievement.earned ? Colors.onPrimary : Colors.neutral60} 
@@ -78,10 +78,10 @@ const HomeScreen = ({ navigation }) => {
   );
 
   const ActivityCard = ({ activity, index }) => (
-    <Surface style={[styles.activityCard, { marginTop: index > 0 ? 12 : 0 }]} elevation={2}>
+    <Surface style={[styles.activityCard, { marginTop: index > 0 ? 8 : 0 }]} elevation={2}>
       <View style={styles.activityContent}>
         <View style={[styles.activityIcon, { backgroundColor: Colors.primaryContainer }]}>
-          <Icon name="fitness-center" size={18} color={Colors.primary} />
+          <MaterialIcons name="fitness-center" size={18} color={Colors.primary} />
         </View>
         <View style={styles.activityInfo}>
           <Text style={styles.activityTitle}>{activity.test}</Text>
@@ -103,22 +103,26 @@ const HomeScreen = ({ navigation }) => {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        <Icon name={icon} size={26} color="#FFFFFF" />
+        <MaterialIcons name={icon} size={26} color="#FFFFFF" />
         <Text style={styles.quickActionText}>{title}</Text>
       </LinearGradient>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]}>
-      <ScrollView showsVerticalScrollIndicator={false} bounces={true}>
+    <SafeAreaView style={[styles.container, { backgroundColor: Colors.background }]} edges={['left', 'right']}>
+      <ScrollView 
+        showsVerticalScrollIndicator={false} 
+        bounces={true}
+        contentContainerStyle={styles.scrollContent}
+      >
         {/* Modern Header with Gradient */}
-        <LinearGradient
-          colors={['#0066FF', '#004CCC', '#0033AA']}
-          style={styles.headerGradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
+      <LinearGradient
+        colors={[Colors.primary, Colors.primary + 'E6', Colors.primary + 'CC']}
+        style={styles.headerGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
           <View style={styles.headerContent}>
             <View style={styles.headerTop}>
               <View style={styles.welcomeSection}>
@@ -128,7 +132,7 @@ const HomeScreen = ({ navigation }) => {
               </View>
               <View style={styles.headerActions}>
                 <TouchableOpacity style={styles.notificationButton}>
-                  <Icon name="notifications-none" size={22} color="#FFFFFF" />
+                  <MaterialIcons name="notifications-none" size={22} color="#FFFFFF" />
                   <View style={styles.notificationDot} />
                 </TouchableOpacity>
                 <Avatar.Image
@@ -262,11 +266,14 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
+  },
+  scrollContent: {
+    paddingBottom: -100, // Remove extra padding that creates gap
   },
   headerGradient: {
-    paddingTop: 20,
-    paddingBottom: 32,
+    paddingTop: 60,
+    paddingBottom: 24,
     paddingHorizontal: 20,
   },
   headerContent: {
@@ -276,7 +283,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 28,
+    marginBottom: 24,
   },
   welcomeSection: {
     flex: 1,
@@ -329,7 +336,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 16,
-    padding: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -355,17 +363,18 @@ const styles = StyleSheet.create({
   },
   contentSection: {
     flex: 1,
-    marginTop: -16,
+    marginTop: 10,
     paddingHorizontal: 20,
+    paddingTop: 16,
   },
   statsSection: {
-    marginBottom: 32,
+    marginBottom: 24,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 18,
     color: Colors.textPrimary,
     fontWeight: '700',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   statsGrid: {
     flexDirection: 'row',
@@ -374,24 +383,24 @@ const styles = StyleSheet.create({
   },
   statCard: {
     width: cardWidth,
-    marginBottom: 16,
-    borderRadius: 20,
+    marginBottom: 12,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   statCardGradient: {
-    padding: 20,
+    padding: 16,
   },
   statCardContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   statIconContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   statInfo: {
     flex: 1,
@@ -418,16 +427,16 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
   quickActionsSection: {
-    marginBottom: 32,
+    marginBottom: 24,
   },
   quickActionsGrid: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   quickActionCard: {
-    width: (width - 60) / 3,
-    height: 80,
-    borderRadius: 20,
+    width: (width - 56) / 3,
+    height: 88,
+    borderRadius: 16,
     overflow: 'hidden',
   },
   quickActionGradient: {
@@ -444,9 +453,9 @@ const styles = StyleSheet.create({
   },
   sectionCard: {
     backgroundColor: Colors.surface,
-    borderRadius: 20,
+    borderRadius: 16,
     padding: 20,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -467,16 +476,16 @@ const styles = StyleSheet.create({
   },
   achievementBadge: {
     alignItems: 'center',
-    marginRight: 24,
-    width: 80,
+    marginRight: 20,
+    width: 76,
   },
   badgeIconContainer: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
     borderWidth: 2,
   },
   badgeTitle: {
@@ -490,7 +499,7 @@ const styles = StyleSheet.create({
   },
   activityCard: {
     backgroundColor: Colors.surfaceVariant,
-    borderRadius: 16,
+    borderRadius: 12,
     padding: 16,
   },
   activityContent: {
@@ -498,12 +507,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activityIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   activityInfo: {
     flex: 1,

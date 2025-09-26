@@ -38,6 +38,8 @@ export const Colors = {
   endurance: '#4ECDC4',
   agility: '#45B7D1',
   flexibility: '#A8E6CF',
+  balance: '#9B59B6',
+  speed: '#E67E22',
   
   // Status colors
   online: '#10B981',

@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../theme/colors';
 
 // Screen imports
@@ -20,27 +21,35 @@ import AchievementsScreen from '../screens/AchievementsScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const TabNavigator = () => (
-  <Tab.Navigator
-    screenOptions={{
-      tabBarStyle: { 
-        height: 80, 
-        paddingBottom: 20,
-        paddingTop: 8,
-        backgroundColor: Colors.surface,
-        borderTopColor: Colors.neutral90,
-        elevation: 8,
-      },
-      tabBarActiveTintColor: Colors.primary,
-      tabBarInactiveTintColor: Colors.neutral50,
-      tabBarLabelStyle: {
-        fontSize: 12,
-        fontWeight: '500',
-        marginTop: 4,
-      },
-      headerShown: false,
-    }}
-  >
+const TabNavigator = () => {
+  const insets = useSafeAreaInsets();
+  
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: { 
+          height: 60 + insets.bottom, // Dynamic height based on safe area
+          paddingBottom: insets.bottom > 0 ? insets.bottom : 8,
+          paddingTop: 6,
+          backgroundColor: Colors.surface,
+          borderTopColor: Colors.neutral90,
+          borderTopWidth: 0,
+          elevation: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+        },
+        tabBarActiveTintColor: Colors.primary,
+        tabBarInactiveTintColor: Colors.neutral50,
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+          marginTop: 4,
+        },
+        headerShown: false,
+      }}
+    >
     <Tab.Screen 
       name="Home" 
       component={HomeScreen}
@@ -82,7 +91,8 @@ const TabNavigator = () => (
       }}
     />
   </Tab.Navigator>
-);
+  );
+};
 
 const MainStack = () => (
   <Stack.Navigator 

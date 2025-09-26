@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "ss": "adb shell screencap -p /sdcard/screenshot.png && adb pull /sdcard/screenshot.png ./screenshot.png && echo Screenshot saved as screenshot.png"
   },
   "dependencies": {
     "@babel/core": "^7.28.4",
@@ -27,7 +28,7 @@
     "react-native-screens": "~4.16.0",
     "react-native-svg": "^13.14.1",
     "react-native-vector-icons": "^10.3.0",
-    "react-native-webview": "^13.16.0",
+    "react-native-webview": "13.15.0",
     "expo-linear-gradient": "~15.0.7"
   },
   "private": true
